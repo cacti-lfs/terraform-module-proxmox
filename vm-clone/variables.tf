@@ -213,7 +213,7 @@ variable "disks" {
         disk_iothread    = optional(bool, false)
         disk_cache       = optional(string, "none")
         disk_ssd         = optional(bool, false)
-        disk_discard     = optional(bool, false)
+        disk_discard     = optional(string, "ignore")
 	}))
 	default = []
 }
