@@ -260,8 +260,9 @@ variable "disk_discard" {
 # ==================================================================
 
 variable "vnic_model" {
-  description = "Modèle de la carte réseau virtuelle à utiliser pour la VM clonée (ex: virtio, e1000)"
+  description   = "Modèle de la carte réseau virtuelle à utiliser pour la VM clonée (ex: virtio, e1000)"
     type        = string
+    default     = "e1000"
 }
 
 variable "vnic_bridge" {
@@ -344,4 +345,10 @@ variable "ipv4_gateway" {
     description = "Passerelle IPv4 à configurer pour la VM clonée"
     type        = string
     default     = ""
+}
+
+variable "ipv4_cidr" {
+  description = "CIDR de l'adresse IPv4 à configurer pour la VM clonée"
+  type        = string
+  default     = ""
 }

@@ -95,13 +95,25 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
     network_data_file_id = var.ci_network_data_file_id
     user_data_file_id = var.ci_user_data_file_id
     vendor_data_file_id = var.ci_vendor_data_file_id
+
+    user_account {
+      username = var.user_account_username
+      keys     = var.user_account_ssh_public_keys
+    }
+
+    ip_config {
+      ipv4 {
+        address = "${var.ipv4_address}${var.ipv4_cidr}"
+        gateway = var.ipv4_gateway
+      }
+    }
+
+    dns {
+      domain  = var.dns_domain
+      servers = var.dns_servers
+    }
   }
 
-  # user_account block supprimé : doit être dans initialization ou remplacé par user_data_file_id
-
-  # dns block supprimé : doit être dans initialization block
-
-  # ip_configuration block supprimé : doit être dans initialization block sous ip_config
 
   lifecycle {
     ignore_changes = [initialization["user_account"],]
