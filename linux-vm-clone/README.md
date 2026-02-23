@@ -96,4 +96,4 @@ module "my_vm" {
 * **Lifecycle Management** : Ignore les changements sur l'utilisateur Cloud-init après le premier déploiement pour éviter les remplacements inutiles.
 
 ## License
-Ce projet est sous licence **MIT**. Vous êtes libre de l'utiliser, de le modifier et de le distribuer, tant que vous conservez l'avis de copyright original. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est sous licence **MIT**. Vous êtes libre de l'utiliser, de le modifier et de le distribuer, tant que vous conservez l'avis de copyright original. Voir le fichier [LICENSE](../LICENSE) pour plus de détails.
