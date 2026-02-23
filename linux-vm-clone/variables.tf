@@ -1,3 +1,9 @@
+# Variable manquante pour cloud-init network data
+variable "ci_network_data_file_id" {
+    description = "ID du fichier network-data cloud-init pour la VM clonée"
+    type        = string
+    default     = ""
+}
 # variables.tf
 # ==================================================================
 # IDENTITE ET EMPLACEMENT DE LA VM
