@@ -27,9 +27,9 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
   }
 
   clone {
-    node_name    = var.node_name
-    source_vm_id = var.source_vm_id
-    full_clone   = var.full_clone
+    vm_id = var.source_vm_id
+    # datastore_id = "local-lvm" # décommentez si besoin de forcer le stockage cible
+    full = var.full_clone
   }
 
   cpu {
@@ -56,16 +56,16 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
   vga {
     type = var.vm_vga_type
-    momory = var.vm_vga_memory
+    memory = var.vm_vga_memory
   }
 
-  dynamic "efi_fisk" {
+  dynamic "efi_disk" {
     for_each = (var.bios == "ovmf" ? [1] : [])
     content {
-        datastore_id = var.efi_disk_storage_id
-        file_format = var.efi_disk_format
-        type = var.efi_disk_type
-        pre_enrolled_keys = var.efi_disk_pre_enrolled_keys
+      datastore_id = var.efi_disk_storage_id
+      file_format = var.efi_disk_format
+      type = var.efi_disk_type
+      pre_enrolled_keys = var.efi_disk_pre_enrolled_keys
     }
   }
 
@@ -97,22 +97,11 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
     vendor_data_file_id = var.ci_vendor_data_file_id
   }
 
-  user_account {
-    username = var.user_account_username
-    ssh_public_keys = var.user_account_ssh_public_keys
-  }
+  # user_account block supprimé : doit être dans initialization ou remplacé par user_data_file_id
 
-  dns {
-    domain = var.dns_domain
-    servers = ( var.dns_servers != null ? [var.dns_servers] : [])
-  }
+  # dns block supprimé : doit être dans initialization block
 
-  ip_configuration {
-    ipv4 {
-        address = var.ipv4_address
-        gateway = var.ipv4_gateway
-    }
-  }
+  # ip_configuration block supprimé : doit être dans initialization block sous ip_config
 
   lifecycle {
     ignore_changes = [initialization["user_account"],]
