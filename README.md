@@ -88,6 +88,7 @@ module "my_vm" {
   ipv4_address                 = "192.168.1.50/24"
   ipv4_gateway                 = "192.168.1.1"
 }
+```
 
 ## Features
 * **Multi-OS Ready** : Supporte Linux (Cloud-init) et Windows.
