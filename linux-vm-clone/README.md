@@ -6,14 +6,11 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 ## Requirements
-|    Name   | Version |
-| --------- | ------- |
-| terraform | >=1.5.0 |
-
-## Providers
-|     Name    | Version  |
+|     Name    |   Version  |
 | ----------- | -------- |
-| bgp proxmox | >=0.90.0 |
+|  Terraform  |  >=1.5.0 |
+|   Proxmox   |  >=9.0   |
+| BPG Proxmox | >=0.90.0 |
 
 ## Variables
 
