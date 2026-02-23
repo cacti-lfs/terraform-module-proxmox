@@ -99,14 +99,14 @@ variable "vm_cpu_type" {
 
 variable "vm_memory_dedicated" {
     description = "Quantité de mémoire dédiée à allouer à la VM clonée (ex: 4G)"
-    type        = string
-    default     = "1G"
+    type        = number
+    default     = 1024
 }
 
 variable "vm_memory_floating" {
     description = "Quantité de mémoire flottante à allouer à la VM clonée (ex: 2G)"
-    type        = string
-    default     = "0G"
+    type        = number
+    default     = 0
 }
 
 # --- TOPOLOGIE NUMA (AVANCE) ---
@@ -136,8 +136,8 @@ variable "numa_cpus" {
 
 variable "numa_memory" {
     description = "Quantité de mémoire à allouer pour le périphérique NUMA de la VM clonée (ex: 4G)"
-    type        = string
-    default     = "0G"
+    type        = number
+    default     = 0
 }
 
 variable "numa_hostnodes" {
@@ -163,8 +163,8 @@ variable "vm_vga_type" {
 
 variable "vm_vga_memory" {
     description = "Quantité de mémoire vidéo à allouer pour la VM clonée (ex: 16M)"
-    type        = string
-    default     = "16M"
+    type        = number
+    default     = 16
 }
 
 # ==================================================================
@@ -206,53 +206,16 @@ variable "disks" {
 	description = "Liste des disques à attacher à la VM"
 	type = list(object({
 		disk_storage_id = string
-		disk_size       = string
+		disk_size       = number
 		disk_type       = string
 		disk_interface  = string
+        disk_file_format = optional(string, "qcow2")
+        disk_iothread    = optional(bool, false)
+        disk_cache       = optional(string, "none")
+        disk_ssd         = optional(bool, false)
+        disk_discard     = optional(bool, false)
 	}))
 	default = []
-}
-
-variable "disk_storage_id" {
-    description = "ID du stockage pour les disques de la VM clonée"
-    type        = string
-    default     = ""
-}
-
-variable "disk_interface" {
-    description = "Interface du disque de la VM clonée (ex: virtio, scsi)"
-    type        = string
-    default     = "virtio"
-}
-
-variable "disk_file_format" {
-    description = "Format du fichier de disque de la VM clonée (ex: qcow2, raw)"
-    type        = string
-    default     = "qcow2"
-}
-
-variable "disk_iothread" {
-    description = "Indique si le disque de la VM clonée doit utiliser un iothread dédié (true/false)"
-    type        = bool
-    default     = false
-}
-
-variable "disk_cache" {
-    description = "Mode de cache du disque de la VM clonée (ex: none, writeback)"
-    type        = string
-    default     = "none"
-}
-
-variable "disk_ssd" {
-    description = "Indique si le disque de la VM clonée doit être traité comme un SSD (true/false)"
-    type        = bool
-    default     = false
-}
-
-variable "disk_discard" {
-    description = "Indique si le disque de la VM clonée doit prendre en charge les commandes TRIM/discard (true/false)"
-    type        = bool
-    default     = false
 }
 
 # ==================================================================
