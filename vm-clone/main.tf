@@ -118,4 +118,7 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
   lifecycle {
     ignore_changes = [initialization["user_account"],]
   }
+
+  stop_on_destroy = true
+  delete_unreferenced_disks_on_destroy = true
 }
