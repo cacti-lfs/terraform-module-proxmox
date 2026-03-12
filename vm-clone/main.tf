@@ -104,7 +104,7 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
     ip_config {
       ipv4 {
         address = var.ipv4_address == "dhcp" ? "dhcp" : "${var.ipv4_address}/${var.ipv4_cidr}"
-        gateway = var.ipv4_gateway
+        gateway = var.ipv4_address == "dhcp" ? null : var.ipv4_gateway
       }
     }
 
