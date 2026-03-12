@@ -103,7 +103,7 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
     ip_config {
       ipv4 {
-        address = "${var.ipv4_address}${var.ipv4_cidr}"
+        address = var.ipv4_address == "dhcp" ? "dhcp" : "${var.ipv4_address}/${var.ipv4_cidr}"
         gateway = var.ipv4_gateway
       }
     }
@@ -121,10 +121,10 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
   stop_on_destroy = true
   delete_unreferenced_disks_on_destroy = true
-  timeout_clone      = 600
-  timeout_create     = 600
+  timeout_clone      = 1800
+  timeout_create     = 1800
   timeout_migrate    = 600
   timeout_reboot     = 300
-  timeout_stop_vm    = 300
-  timeout_start_vm   = 300
+  timeout_stop_vm    = 600
+  timeout_start_vm   = 600
 }
