@@ -28,8 +28,10 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
   clone {
     vm_id = var.source_vm_id
-    # datastore_id = "local-lvm" # décommentez si besoin de forcer le stockage cible
+    node_name = var.source_node_name
+    datastore_id = var.clone_datastore_id
     full = var.full_clone
+    retries = var.clone_retries
   }
 
   cpu {

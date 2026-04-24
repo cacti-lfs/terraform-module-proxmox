@@ -75,10 +75,26 @@ variable "source_vm_id" {
     type        = number
 }
 
+variable "source_node_name" {
+    description = "Nom du nœud Proxmox où se trouve la VM source à cloner"
+    type        = string
+}
+
+variable "clone_datastore_id" {
+  description = "Stockage cible du clone"
+    type        = string
+}
+
 variable "full_clone" {
     description = "Indique si le clone doit être complet (true) ou lié (false)"
     type        = bool
     default     = false
+}
+
+variable "clone_retries" {
+    description = "Nombre de tentatives de clonage en cas d'échec"
+    type        = number
+    default     = 3
 }
 
 # ==================================================================
