@@ -138,7 +138,6 @@ resource "proxmox_virtual_environment_haresource" "vm_ha" {
   count = var.ha_enabled ? 1 : 0
 
   resource_id = "vm:${proxmox_virtual_environment_vm.linux_vm.vm_id}"
-  group       = var.ha_group
   state       = var.ha_state
 
   depends_on = [
