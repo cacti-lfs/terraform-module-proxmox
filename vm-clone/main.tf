@@ -1,5 +1,5 @@
 terraform {
-    required_version = ">=1.5.0"
+  required_version = ">=1.5.0"
   required_providers {
     proxmox = {
       version = ">=0.90.0"
@@ -27,17 +27,17 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
   }
 
   clone {
-    vm_id = var.source_vm_id
-    node_name = var.source_node_name
+    vm_id        = var.source_vm_id
+    node_name    = var.source_node_name
     datastore_id = var.clone_datastore_id
-    full = var.full_clone
-    retries = var.clone_retries
+    full         = var.full_clone
+    retries      = var.clone_retries
   }
 
   cpu {
     cores = var.vm_cpu_cores
     type  = var.vm_cpu_type
-    numa = var.vm_cpu_numa
+    numa  = var.vm_cpu_numa
   }
 
   memory {
@@ -48,55 +48,55 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
   dynamic "numa" {
     for_each = (var.numa == true ? [1] : [])
     content {
-        device = var.numa_device
-        cpus = var.numa_cpus
-        memory = var.numa_memory
-        hostnodes = var.numa_hostnodes
-        policy = var.numa_policy
-    }    
+      device    = var.numa_device
+      cpus      = var.numa_cpus
+      memory    = var.numa_memory
+      hostnodes = var.numa_hostnodes
+      policy    = var.numa_policy
+    }
   }
 
   vga {
-    type = var.vm_vga_type
+    type   = var.vm_vga_type
     memory = var.vm_vga_memory
   }
 
   dynamic "efi_disk" {
     for_each = (var.bios == "ovmf" ? [1] : [])
     content {
-      datastore_id = var.efi_disk_storage_id
-      file_format = var.efi_disk_format
-      type = var.efi_disk_type
+      datastore_id      = var.efi_disk_storage_id
+      file_format       = var.efi_disk_format
+      type              = var.efi_disk_type
       pre_enrolled_keys = var.efi_disk_pre_enrolled_keys
     }
   }
 
   network_device {
-    model = var.vnic_model
-    bridge = var.vnic_bridge
+    model   = var.vnic_model
+    bridge  = var.vnic_bridge
     vlan_id = var.vlan_tag
   }
 
   dynamic "disk" {
     for_each = var.disks
     content {
-        datastore_id =disk.value.disk_storage_id
-        interface = disk.value.disk_interface
-        size = disk.value.disk_size
-        file_format = disk.value.disk_file_format
-        iothread = disk.value.disk_iothread
-        cache = disk.value.disk_cache
-        ssd = disk.value.disk_ssd
-        discard = disk.value.disk_discard
+      datastore_id = disk.value.disk_storage_id
+      interface    = disk.value.disk_interface
+      size         = disk.value.disk_size
+      file_format  = disk.value.disk_file_format
+      iothread     = disk.value.disk_iothread
+      cache        = disk.value.disk_cache
+      ssd          = disk.value.disk_ssd
+      discard      = disk.value.disk_discard
     }
   }
 
   initialization {
-    datastore_id = var.ci_datastore_id
-    meta_data_file_id = var.ci_meta_data_file_id
+    datastore_id         = var.ci_datastore_id
+    meta_data_file_id    = var.ci_meta_data_file_id
     network_data_file_id = var.ci_network_data_file_id
-    user_data_file_id = var.ci_user_data_file_id
-    vendor_data_file_id = var.ci_vendor_data_file_id
+    user_data_file_id    = var.ci_user_data_file_id
+    vendor_data_file_id  = var.ci_vendor_data_file_id
 
     user_account {
       username = var.user_account_username
@@ -119,18 +119,18 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
   lifecycle {
     ignore_changes = [initialization["user_account"],
-    nodename
+      nodename
     ]
   }
 
-  stop_on_destroy = true
+  stop_on_destroy                      = true
   delete_unreferenced_disks_on_destroy = true
-  timeout_clone      = 1800
-  timeout_create     = 1800
-  timeout_migrate    = 600
-  timeout_reboot     = 300
-  timeout_stop_vm    = 600
-  timeout_start_vm   = 600
+  timeout_clone                        = 1800
+  timeout_create                       = 1800
+  timeout_migrate                      = 600
+  timeout_reboot                       = 300
+  timeout_stop_vm                      = 600
+  timeout_start_vm                     = 600
 }
 
 resource "proxmox_virtual_environment_haresource" "vm_ha" {
