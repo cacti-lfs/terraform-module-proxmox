@@ -331,3 +331,24 @@ variable "ipv4_cidr" {
   type        = string
   default     = ""
 }
+
+# ==================================================================
+# HA
+# ==================================================================
+variable "ha_enabled" {
+    description = "Indique si la haute disponibilité doit être activée pour la VM clonée (true/false)"
+    type        = bool
+    default     = false
+}
+
+variable "ha_group" {
+    description = "Groupe de haute disponibilité pour la VM clonée"
+    type        = string
+    default     = ""
+}
+
+variable "ha_state" {
+    description = "État de la haute disponibilité pour la VM clonée"
+    type        = string
+    default     = "started"
+}

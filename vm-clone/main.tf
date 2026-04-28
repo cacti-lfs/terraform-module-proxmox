@@ -118,7 +118,9 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
 
   lifecycle {
-    ignore_changes = [initialization["user_account"],]
+    ignore_changes = [initialization["user_account"],
+    nodename
+    ]
   }
 
   stop_on_destroy = true
@@ -129,4 +131,16 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
   timeout_reboot     = 300
   timeout_stop_vm    = 600
   timeout_start_vm   = 600
+}
+
+resource "proxmox_virtual_environment_haresource" "vm_ha" {
+  count = var.ha_enabled ? 1 : 0
+
+  resource_id = "vm:${proxmox_virtual_environment_vm.linux_vm.vm_id}"
+  group       = var.ha_group
+  state       = var.ha_state
+
+  depends_on = [
+    proxmox_virtual_environment_vm.linux_vm
+  ]
 }
