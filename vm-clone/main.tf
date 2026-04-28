@@ -118,8 +118,9 @@ resource "proxmox_virtual_environment_vm" "linux_vm" {
 
 
   lifecycle {
-    ignore_changes = [initialization["user_account"],
-      nodename
+    ignore_changes = [
+      initialization["user_account"],
+      node_name
     ]
   }
 
